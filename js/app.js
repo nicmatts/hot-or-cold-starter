@@ -39,15 +39,17 @@ var newGame = function(){
 
 	getNum();
 
-	if (userNumber < computerNumber){
-		alert("too low!");
-	} else if (userNumber > computerNumber){
-		alert("too high!");
-	} else if (typeof userNumber != 'number'){
-		prompt("Please enter a valid number between 1 and 100.");
-	} else {
-		alert("you got it!");
-	}
+	var compareNumbers = function(userNumber, computerNumber){
+		while (userNumber !== computerNumber) {
+			if (userNumber > computerNumber){
+				userNumber = +(prompt("Please enter a number between " + userNumber + " and " + computerNumber));
+			} else {
+				userNumber = +(prompt("Please enter a number between " + userNumber + " and " + computerNumber));
+			}
+		} alert("You got it!");
+	};
+
+	compareNumbers(userNumber, computerNumber);
 };
 
 window.onload(newGame());
