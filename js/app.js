@@ -47,6 +47,7 @@ $(document).ready(function(){
 			//make user entry is valid
 			if(isNaN(userNumber) || userNumber > 100 || userNumber < 0){
 				$("h2#feedback").text("Please enter a number between 1 and 100.");
+				$("input:text").val("");
 			} else {
 				//compare the user number and the computer number and return a result
 				if (userNumber !== computerNumber) {
