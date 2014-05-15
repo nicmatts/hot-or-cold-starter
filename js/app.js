@@ -14,7 +14,6 @@ $(document).ready(function(){
 	var newGame = function(){
 		// generate random number
 		var computerNumber = Math.floor(Math.random() * (100 )) + 1;
-		//alert(computerNumber);
 		
 		//intitialize guess count
 		var guessCount = 1;
@@ -26,8 +25,8 @@ $(document).ready(function(){
 			
 			//get the user's guess
 			userNumber = Number($("input:text").val());
-			//userNumber = $(userNumber).toNum();
-			//userNumber = Number(userNumber);
+
+			//alert for debugging purposes
 			alert(typeof userNumber);
 
 			//increment the guess count after each guess
@@ -67,6 +66,6 @@ $(document).ready(function(){
 			}
 		});
 	};
-	
+
 	window.onload(newGame());
 });
