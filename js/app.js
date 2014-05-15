@@ -15,7 +15,6 @@ $(document).ready(function(){
 		
 		// generate random number
 		var computerNumber = Math.floor(Math.random() * (100 )) + 1;
-		//alert(computerNumber);
 		
 		//intitialize guess count
 		var guessCount = 1;
@@ -28,12 +27,6 @@ $(document).ready(function(){
 			//get the user's guess
 			userNumber = Number($("input:text").val());
 
-			//alert for debugging
-
-
-			//increment the guess count after each guess
-			$("span#count").text(guessCount);
-			guessCount += 1;
 			
 			//get the difference between the user number and the computer number
 			var difference = Math.abs(userNumber-computerNumber);
@@ -45,10 +38,14 @@ $(document).ready(function(){
 			}
 
 			//make user entry is valid
-			if(isNaN(userNumber) || userNumber > 100 || userNumber < 0){
+			if(isNaN(userNumber) || userNumber > 100 || userNumber < 0 || userNumber == " "){
 				$("h2#feedback").text("Please enter a number between 1 and 100.");
 				$("input:text").val("");
 			} else {
+				//increment the guess count after each guess
+				$("span#count").text(guessCount);
+				guessCount += 1;
+			
 				//compare the user number and the computer number and return a result
 				if (userNumber !== computerNumber) {
 					if (difference < 5){
