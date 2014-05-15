@@ -2,54 +2,71 @@
 $(document).ready(function(){
 	
 	/*--- Display information modal box ---*/
-  	$(".what").click(function(){
-    	$(".overlay").fadeIn(1000);
+	$(".what").click(function(){
+		$(".overlay").fadeIn(1000);
+	});
 
-  	});
+	/*--- Hide information modal box ---*/
+	$("a.close").click(function(){
+		$(".overlay").fadeOut(1000);
+	});
 
-  	/*--- Hide information modal box ---*/
-  	$("a.close").click(function(){
-  		$(".overlay").fadeOut(1000);
-  	});
+	var newGame = function(){
+		// generate random number
+		var computerNumber = Math.floor(Math.random() * (100 )) + 1;
+		//alert(computerNumber);
+		
+		//intitialize guess count
+		var guessCount = 1;
 
-});
+		//this is the game
+		$("#guessButton").click(function(e) {
+			//prevent the page from reloading when the button is clicked
+			e.preventDefault();
+			
+			//get the user's guess
+			userNumber = Number($("input:text").val());
+			//userNumber = $(userNumber).toNum();
+			//userNumber = Number(userNumber);
+			alert(typeof userNumber);
 
-
-
-var newGame = function(){
-	// generate random number
-	var computerNumber = Math.floor(Math.random() * (100 )) + 1;
-	var userNumber = function(){
-		userNumber = +(prompt("Enter a number between 1 and 100."));
-	};
-	//var userNumber;
-
-	alert(computerNumber);
-
-	//prompt user for guess
-	var getNum = function(){
-		userNumber();
-		if ($.isNumeric(userNumber) && userNumber > 0 && userNumber < 101){
-			alert(userNumber);
-		} else {
-			userNumber();
-			getNum();
-		}
-	};
-
-	getNum();
-
-	var compareNumbers = function(userNumber, computerNumber){
-		while (userNumber !== computerNumber) {
-			if (userNumber > computerNumber){
-				userNumber = +(prompt("Please enter a number between " + userNumber + " and " + computerNumber));
-			} else {
-				userNumber = +(prompt("Please enter a number between " + userNumber + " and " + computerNumber));
+			//increment the guess count after each guess
+			$("span#count").text(guessCount);
+			guessCount += 1;
+			
+			//get the difference between the user number and the computer number
+			var difference = Math.abs(userNumber-computerNumber);
+			
+			//clear the text box and append the user's guess
+			function clearAndAppend(){
+				$("input:text").val("");
+				$("ul#guessList").append("<li>" + userNumber + "</li>");
 			}
-		} alert("You got it!");
+
+			//compare the user number and the computer number and return a result
+			if (userNumber !== computerNumber) {
+				if (difference < 5){
+					$("h2#feedback").text("HOT HOT HOT! Try again.");
+					clearAndAppend();
+				} else if (difference >= 5 && difference < 10) {
+					$("h2#feedback").text("You're hot!");
+					clearAndAppend();
+				} else if (difference >= 10 && difference < 20) {
+					$("h2#feedback").text("You're warm, try again!");
+					clearAndAppend();
+				} else if (difference >= 20 && difference < 40) {
+					$("h2#feedback").text("You're cool, try again!");
+					clearAndAppend();
+				} else {
+					$("h2#feedback").text("You're ice cold, try again!");
+					$clearAndAppend();
+				}
+			} else {
+				$("h2#feedback").text("You got it!");
+				$("ul#guessList").append("<li>" + userNumber + "</li>");
+			}
+		});
 	};
-
-	compareNumbers(userNumber, computerNumber);
-};
-
-window.onload(newGame());
+	
+	window.onload(newGame());
+});
