@@ -12,8 +12,10 @@ $(document).ready(function(){
 	});
 
 	var newGame = function(){
+		
 		// generate random number
 		var computerNumber = Math.floor(Math.random() * (100 )) + 1;
+		//alert(computerNumber);
 		
 		//intitialize guess count
 		var guessCount = 1;
@@ -26,8 +28,8 @@ $(document).ready(function(){
 			//get the user's guess
 			userNumber = Number($("input:text").val());
 
-			//alert for debugging purposes
-			alert(typeof userNumber);
+			//alert for debugging
+
 
 			//increment the guess count after each guess
 			$("span#count").text(guessCount);
@@ -42,27 +44,32 @@ $(document).ready(function(){
 				$("ul#guessList").append("<li>" + userNumber + "</li>");
 			}
 
-			//compare the user number and the computer number and return a result
-			if (userNumber !== computerNumber) {
-				if (difference < 5){
-					$("h2#feedback").text("HOT HOT HOT! Try again.");
-					clearAndAppend();
-				} else if (difference >= 5 && difference < 10) {
-					$("h2#feedback").text("You're hot!");
-					clearAndAppend();
-				} else if (difference >= 10 && difference < 20) {
-					$("h2#feedback").text("You're warm, try again!");
-					clearAndAppend();
-				} else if (difference >= 20 && difference < 40) {
-					$("h2#feedback").text("You're cool, try again!");
-					clearAndAppend();
-				} else {
-					$("h2#feedback").text("You're ice cold, try again!");
-					$clearAndAppend();
-				}
+			//make user entry is valid
+			if(isNaN(userNumber) || userNumber > 100 || userNumber < 0){
+				$("h2#feedback").text("Please enter a number between 1 and 100.");
 			} else {
-				$("h2#feedback").text("You got it!");
-				$("ul#guessList").append("<li>" + userNumber + "</li>");
+				//compare the user number and the computer number and return a result
+				if (userNumber !== computerNumber) {
+					if (difference < 5){
+						$("h2#feedback").text("HOT HOT HOT! Try again.");
+						clearAndAppend();
+					} else if (difference >= 5 && difference < 10) {
+						$("h2#feedback").text("You're hot!");
+						clearAndAppend();
+					} else if (difference >= 10 && difference < 20) {
+						$("h2#feedback").text("You're warm, try again!");
+						clearAndAppend();
+					} else if (difference >= 20 && difference < 40) {
+						$("h2#feedback").text("You're cool, try again!");
+						clearAndAppend();
+					} else {
+						clearAndAppend();
+						$("h2#feedback").text("You're ice cold, try again!");
+					}
+				} else {
+					$("h2#feedback").text("You got it!").attr("id", "win");
+					$("ul#guessList").append("<li>" + userNumber + "</li>");
+				}
 			}
 		});
 	};
